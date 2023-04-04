@@ -45,7 +45,7 @@ const SignUpForm = () => {
   
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
-                <Form.Label className="d-none">username</Form.Label>
+                <Form.Label className="d-none">Username</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="text"
@@ -121,7 +121,7 @@ const SignUpForm = () => {
         >
           <Image
             className={`${appStyles.FillerImage}`}
-            src={"https://codeinstitute.s3.amazonaws.com/AdvancedReact/hero2.jpg"}
+            src={"https://th.bing.com/th/id/OIP.8nAvbVJx_622tXr5vsyTwQHaE7?pid=ImgDet&rs=1"}
           />
         </Col>
       </Row>
