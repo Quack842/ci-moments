@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import { axiosRes, axiosReq } from "../api/axiosDefaults";
-import { useHistory } from "react-router-dom";
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import { useHistory } from "react-router";
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -30,8 +30,8 @@ export const CurrentUserProvider = ({ children }) => {
     axiosReq.interceptors.request.use(
       async (config) => {
         try {
-          await axios.post("/dj-post-auth/token/refresh/");
-        } catch {
+          await axios.post("/dj-rest-auth/token/refresh/");
+        } catch (err) {
           setCurrentUser((prevCurrentUser) => {
             if (prevCurrentUser) {
               history.push("/signin");
@@ -48,9 +48,7 @@ export const CurrentUserProvider = ({ children }) => {
     );
 
     axiosRes.interceptors.response.use(
-      // If there is no error
       (response) => response,
-      // incase there is an error
       async (err) => {
         if (err.response?.status === 401) {
           try {
