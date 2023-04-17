@@ -61,7 +61,7 @@ function PostCreateForm() {
     }
   };
 
-  const textField = (
+  const textFields = (
     <div className="text-center">
       <Form.Group>
         <Form.Label>Title</Form.Label>
@@ -81,7 +81,7 @@ function PostCreateForm() {
       <Form.Group>
         <Form.Label>Content</Form.Label>
         <Form.Control
-          type="textarea"
+          as="textarea"
           rows={6}
           name="content"
           value={content}
@@ -152,11 +152,11 @@ function PostCreateForm() {
               </Alert>
             ))}
 
-            <div className="d-md-none">{textField}</div>
+            <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
         <Col className="d-none d-md-block p-0 p-md-2" md={5}>
-          <Container className={appStyles.Content}>{textField}</Container>
+          <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
     </Form>

@@ -4,7 +4,7 @@ import Post from "./Post";
 import { Form, Col, Row, Container } from "react-bootstrap";
 import appStyles from "../../App.module.css";
 import styles from "../../assets/styles/PostsPage.module.css";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useLocation } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import Asset from "../../components/Asset";
 import NoResults from "../../assets/images/no-results.png";
@@ -38,8 +38,8 @@ function PostsPage({ message, filter = "" }) {
     return () => {
       clearTimeout(timer);
     };
-    // 
-  }, [filter, pathname, query]);
+    //
+  }, [filter, query, pathname]);
 
   return (
     <Row className="h-100">
@@ -62,15 +62,15 @@ function PostsPage({ message, filter = "" }) {
         {hasLoaded ? (
           <>
             {posts.results.length ? (
-               <InfiniteScroll	
-               children={posts.results.map((post) => (	
-                 <Post key={post.id} {...post} setPosts={setPosts} />	
-               ))}	
-               dataLength={posts.results.length}	
-               loader={<Asset spinner />}	
-               hasMore={!!posts.next}	
-               next={() => fetchMoreData(posts, setPosts)}	
-             />
+              <InfiniteScroll
+                children={posts.results.map((post) => (
+                  <Post key={post.id} {...post} setPosts={setPosts} />
+                ))}
+                dataLength={posts.results.length}
+                loader={<Asset spinner />}
+                hasMore={!!posts.next}
+                next={() => fetchMoreData(posts, setPosts)}
+              />
             ) : (
               <Container className={appStyles.Content}>
                 <Asset src={NoResults} message={message} />
