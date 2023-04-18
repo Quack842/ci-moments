@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Col, Row, Container, Image, Button } from "react-bootstrap";
+import { ProfileEditDropdown } from "../../components/MoreDropdown";
 
 import Asset from "../../components/Asset";
 import Post from "../posts/Post";
@@ -11,7 +12,7 @@ import styles from "../../assets/styles/ProfilePage.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../assets/styles/Button.module.css";
 
-import NoResults from "../../assets/images/no-results.png"
+import NoResults from "../../assets/images/no-results.png";
 
 import { fetchMoreData } from "../../utils/utils";
 import PopularProfiles from "./PopularProfiles";
@@ -27,7 +28,7 @@ function ProfilePage() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const currentUser = useCurrentUser();
   const { id } = useParams();
-  const {setProfileData, handleFollow, handleUnfollow} = useSetProfileData();
+  const { setProfileData, handleFollow, handleUnfollow } = useSetProfileData();
   const { pageProfile } = useProfileData();
   const [profilePosts, setProfilePosts] = useState({ results: [] });
   const [profile] = pageProfile.results;
@@ -36,10 +37,11 @@ function ProfilePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [{ data: pageProfile }, { data: profilePosts }] = await Promise.all([
-          axiosReq.get(`/profiles/${id}`),
-          axiosReq.get(`/posts/?owner__profile=${id}`),
-        ]);
+        const [{ data: pageProfile }, { data: profilePosts }] =
+          await Promise.all([
+            axiosReq.get(`/profiles/${id}`),
+            axiosReq.get(`/posts/?owner__profile=${id}`),
+          ]);
         setProfileData((prevState) => ({
           ...prevState,
           pageProfile: { results: [pageProfile] },
@@ -55,6 +57,7 @@ function ProfilePage() {
 
   const mainProfile = (
     <>
+      {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
@@ -99,7 +102,7 @@ function ProfilePage() {
               </Button>
             ))}
         </Col>
-        {profile?.content && (<Col className="p-3">{profile?.content}</Col>)}
+        {profile?.content && <Col className="p-3">{profile?.content}</Col>}
       </Row>
     </>
   );

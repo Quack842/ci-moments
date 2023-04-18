@@ -12,14 +12,19 @@ import {
 } from "react-bootstrap";
 
 import { Link, useHistory } from "react-router-dom";
+import {setTokenTimestamp} from '../../utils/utils';
 
 import styles from "../../assets/styles/SignUpForm.module.css";
 import btnStyles from "../../assets/styles/Button.module.css";
 import appStyles from "../../App.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { useRedirect } from "../../hooks/UseRedirect";
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
+  // When the user is logged on, they will be redirected to a different page.
+  useRedirect("loggedIn");
+
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
@@ -33,12 +38,14 @@ function SignInForm() {
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
+      setTokenTimestamp(data);
+      history.goBack();
       history.push("/");
     } catch (err) {
       setErrors(err.response?.data);
     }
   };
-  
+
   const handleChange = (event) => {
     setSignInData({
       ...signInData,
