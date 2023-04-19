@@ -13,7 +13,7 @@ export const useRedirect = (userAuthStatus) => {
           history.push("/");
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         if (userAuthStatus === 'loggedOut'){
             history.push('/')
         }
